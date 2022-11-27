@@ -1,8 +1,7 @@
 import 'dotenv/config'
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import {TypeOrmModule} from '@nestjs/typeorm'
+import { UsersModule } from './user/user.module';
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'mysql',
@@ -11,11 +10,11 @@ import {TypeOrmModule} from '@nestjs/typeorm'
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
-    entities: [],
+    entities: [__dirname+'/entities/*.entity{.ts,.js}'],
     logging:true,
-    synchronize: false,
-  })],
-  controllers: [AppController],
-  providers: [AppService],
+    synchronize: true,
+  }),UsersModule],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
